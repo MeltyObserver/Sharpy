@@ -1,0 +1,3 @@
+[submodule "BlazorStatic"]
+	path = BlazorStatic
+	url = https://github.com/MeltyObserver/BlazorStatic.git
