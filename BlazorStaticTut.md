@@ -27,4 +27,27 @@ $ echo "output" >> .gitignore
 $ dotnet run --project SharpyTut
 ```
 
+site's folder structure:
 
+```
+- src
+    - Components/
+        - Pages/
+            + About.razor
+            + Home.razor
+            + Post.razor
+
+        - Layouts/
+            + MainLayout.razor
+
+        - Fragments/
+            + SideBar.razor
+            + Footer.razor
+
+        + App.razor
+        + Routes.razor
+        + Program.cs
+
+    - wwwroot/
+    + Program.cs
+```
