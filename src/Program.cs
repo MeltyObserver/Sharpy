@@ -1,14 +1,22 @@
-using Sharpy.Components;
+using Sharpy;
 using BlazorStatic;
-
+using Sharpy.Components;
 
 var builder = WebApplication.CreateBuilder(args);
-// Add services to the container.
+
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
+builder.Services.AddBlazorStaticService((o) =>
+{
+    o.SuppressFileGeneration = true;
+});
 
-builder.Services.AddBlazorStaticService();
+string appsettingsFile = builder.Environment.IsDevelopment() ? "appsettings.Development.json" : "appsettings.json";
+IConfiguration config = new ConfigurationBuilder().AddJsonFile(appsettingsFile).Build();
+AppSettings settings = config.GetRequiredSection("Settings").Get<AppSettings>()!;
+
+builder.Services.AddSingleton(settings);
 
 var app = builder.Build();
 
