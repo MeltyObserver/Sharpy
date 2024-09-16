@@ -1,14 +1,9 @@
-* {
-  color: var(--text);
-}
-
 .dropdown-toggle {
   outline: 0;
 }
 
 .bi {
   vertical-align: -.125em;
-  fill: currentColor;
 }
 
 .nav {
@@ -55,12 +50,6 @@
   border-radius: 50%;
   width: 8rem;
   height: 8rem;
-}
-
-.lead {
-  font-size: 16px;
-  font-style: italic;
-  color: var(--subtext1);
 }
 
 /* thanks to https://stackoverflow.com/a/63022485 */
