@@ -143,3 +143,46 @@
     --bs-tertiary-bg: var(--surface0);
     --bs-tertiary-bg-rgb: var(--surface0-rgb);
 }
+
+.form-control {
+    background-color: var(--mantle);
+    color: var(--bs-body-color);
+}
+
+.form-control::placeholder {
+    color: var(--subtext1);
+}
+
+.form-control:focus {
+    color: var(--bs-body-color);
+    background-color: var(--mantle);
+    border-color: transparent;
+    outline: none;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    box-shadow: none;
+}
+
+.form-control:focus::placeholder {
+    color: var(--overlay0);
+}
+
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--text);
+}
+
+.lead {
+    font-size: 16px;
+    font-style: italic;
+    color: var(--subtext1);
+  }
