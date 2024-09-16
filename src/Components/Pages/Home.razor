@@ -1,7 +1,20 @@
 ﻿@page "/"
+@page "/posts/{*PostUrl}"
 
-<PageTitle>Home</PageTitle>
+@inject UserSettings settings
 
-<h1>Hello, world!</h1>
+<PageTitle>@SiteSettings.Pages.Home @@ @settings.Title</PageTitle>
 
-Welcome to your new app.
+@if (string.IsNullOrWhiteSpace(PostUrl))
+{
+    <PostList />
+}
+else
+{
+    <PostReader PostUrl="@PostUrl"/>
+}
+
+@code {
+    [Parameter]
+    public string? PostUrl { get; set; }
+}
