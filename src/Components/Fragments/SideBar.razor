@@ -1,17 +1,20 @@
-@inject AppSettings settings
+@inject UserSettings userSettings
 
-<div class="sidebar-body d-flex flex-column align-items-start ps-4 pt-5">
+<div class="position-relative sidebar-body d-flex flex-column align-items-start ps-4 pt-5 z-3">
 
-    @if (settings.Image is not null)
+    @if (!string.IsNullOrWhiteSpace(userSettings.Image))
     {
-        <img src="@settings.Image" class="side-icon">
+        <img src="@userSettings.Image" class="side-icon">
     }
 
     <div class="d-flex flex-column mt-3 mb-3 link-body-emphasis">
         <a href="/" class="text-decoration-none h3">
-            @settings.Title
+            @userSettings.Title
         </a>
-        <p class="lead">@settings.Description</p>
+        @if (!string.IsNullOrWhiteSpace(userSettings.Description))
+        {
+            <p class="lead">@userSettings.Description</p>
+        }
     </div>
 
     <ul class="nav nav-pills flex-column mb-auto">
@@ -20,23 +23,23 @@
                 <svg class="bi pe-none me-3" width="16" height="16">
                     <use xlink:href="#home" />
                 </svg>
-                Home
+                @SiteSettings.Pages.Home
             </NavLink>
         </li>
         <li class="nav-item py-1">
-            <NavLink href="projects" class="nav-link link-body-emphasis">
+            <NavLink href="@SiteSettings.Pages.Projects" class="nav-link link-body-emphasis">
                 <svg class="bi pe-none me-3" width="16" height="16">
                     <use xlink:href="#boxes" />
                 </svg>
-                Projects
+                @SiteSettings.Pages.Projects
             </NavLink>
         </li>
         <li class="nav-item py-1">
-            <NavLink href="About" class="nav-link link-body-emphasis">
+            <NavLink href="@SiteSettings.Pages.About" class="nav-link link-body-emphasis">
                 <svg class="bi pe-none me-3" width="16" height="16">
                     <use xlink:href="#people-circle" />
                 </svg>
-                About
+                @SiteSettings.Pages.About
             </NavLink>
         </li>
     </ul>
@@ -52,25 +55,25 @@
         </button>
         <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="bd-theme-text">
             <li>
-                <button type="button" class="dropdown-item d-flex align-items-center" data-theme-value="latte"
+                <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light"
                     id="light-b" aria-pressed="false">
                     <svg class="bi me-2 opacity-50" width="1em" height="1em">
                         <use href="#sun"></use>
                     </svg>
                     Light
-                    <svg class="bi ms-auto d-none lighttheme-check " width="1em" height="1em">
+                    <svg class="bi ms-auto d-none lighttheme-check" width="1em" height="1em">
                         <use href="#check2"></use>
                     </svg>
                 </button>
             </li>
             <li>
-                <button type="button" class="dropdown-item d-flex align-items-center" data-theme-value="mocha"
+                <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark"
                     id="dark-b" aria-pressed="false">
                     <svg class="bi me-2 opacity-50" width="1em" height="1em">
                         <use href="#moon-stars"></use>
                     </svg>
                     Dark
-                    <svg class="bi ms-auto d-none darktheme-check " width="1em" height="1em">
+                    <svg class="bi ms-auto d-none darktheme-check" width="1em" height="1em">
                         <use href="#check2"></use>
                     </svg>
                 </button>

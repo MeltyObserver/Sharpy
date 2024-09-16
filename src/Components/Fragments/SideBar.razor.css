@@ -23,10 +23,6 @@
   font-weight: bold;
 }
 
-.dropdown-menu .active .bi {
-  display: block !important;
-}
-
 /* ---------------------- */
 
 .nav-item {
@@ -65,4 +61,18 @@
   font-size: 16px;
   font-style: italic;
   color: var(--subtext1);
+}
+
+/* thanks to https://stackoverflow.com/a/63022485 */
+.darktheme-check,
+.lighttheme-check {
+    display: none !important;
+}
+
+[data-bs-theme-value="dark"] .darktheme-check {
+    display: inline !important;
+}
+
+[data-bs-theme-value="light"] .lighttheme-check {
+    display: inline !important;
 }
