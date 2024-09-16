@@ -1,6 +1,6 @@
-namespace Sharpy;
+namespace Sharpy.Models;
 
-public class AppSettings
+public class UserSettings
 {
     public required string Title { get; set; }
     public string Description { get; set; } = "Chirpy clone made in blazor";
