@@ -2,25 +2,61 @@
     --sidebar-width: 260px;
     --sidebar-width-inverted: -260px;
     --breakpoint-lg: 992px;
+    --breakpoint-medium: 768px;
 }
 
 .sidebar {
     height: 100%;
+    width: var(--sidebar-width);
     position: fixed;
-    transform: translateX(var(--sidebar-width-inverted));
+    z-index: 1;
 }
 
-@media (min-width: 992px) {
-    .page {
+.page-mobile-view {
+    /* transform: translateX(var(--sidebar-width));
+    width: calc(100% - var(--sidebar-width)); */
+    animation: 1s alternate slidein;
+}
+
+.sidebar-mobile-view {
+    transform: translateX(0px) !important;
+    z-index: 20;
+    animation: 1s alternate slidein;
+}
+
+#sidebar-backdrop {
+    width:100vw;
+    height: 100vh;
+    background-color: black;
+    opacity: 0.5;
+    cursor: default;
+    border: 0px;
+}
+
+.sidebar-backdrop-animation {
+    animation: 0.5s alternate fadein;
+}
+
+/* desktop view */
+@media (min-width: 768px) {
+    #main {
         /* animation: 0.8s alternate slidein; */
         transform: translateX(var(--sidebar-width));
         width: calc(100% - var(--sidebar-width));
     }
 }
 
-@media (max-width: 992px) {
-    .page {
+/* mobile view */
+@media (max-width: 768px) {
+    #main {
         animation: 1s alternate slideout;
+    }
+
+    .sidebar {
+        transform: translateX(var(--sidebar-width-inverted));
+    }
+    #sidebar-backdrop {
+        transform: translateX(var(--sidebar-width));
     }
 }
 
@@ -37,18 +73,33 @@
         overflow-y: visible;
     }
 }
+
 @keyframes slideout {
     from {
         translate: 260px 0;
         scale: 100% 1;
         overflow-y: visible;
     }
+
     to {
         translate: 0 0;
         scale: 100% 1;
         overflow-y: hidden;
     }
+}
 
+@keyframes fadein {
+    from {
+        opacity: 0;
+        overflow-y: hidden;
+    }
+
+    to {
+        opacity: .5;
+        translate: 0 0;
+        scale: 100% 1;
+        overflow-y: visible;
+    }
 }
 
 #blazor-error-ui {

@@ -1,12 +1,18 @@
 ﻿@inherits LayoutComponentBase
+@using Microsoft.AspNetCore.Mvc.RazorPages;
 
-<div class="page">
-    <div class="sidebar">
+<div id="page">
+    <div id="sidebar" class="sidebar">
+        @* todo: fix side bar on chromium not sticking on scroll *@
+        <button class="hidden position-absolute top-0 start-0 z-2" id="sidebar-backdrop" onclick="UpdateSideBar()"></button>
         <SideBar />
     </div>
 
-    <main class="p-4">
-        @Body
+    <main id="main" class="px-4">
+        <TopBar />
+        <article class="container-lg py-4">
+            @Body
+        </article>
     </main>
 </div>
 
