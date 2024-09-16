@@ -1,0 +1,28 @@
+@* todo: find a better name for this file *@
+@using BlazorStatic
+@inject BlazorStaticContentService<PostFrontMatter> blazorStaticContentService
+
+@if (post is null)
+{
+    <div>Post not found :@("<") </div>
+    return;
+}
+else
+{
+    <center class=" pb-5">
+        <h1 class="display-3">@post.FrontMatter.Title</h1>
+        <p class="lead">@post.FrontMatter.Description</p>
+    </center>
+    @((MarkupString)post.HtmlContent)
+
+}
+
+@code {
+    [Parameter, EditorRequired]
+    public string PostUrl { get; set; }
+    private Post<PostFrontMatter>? post;
+    protected override void OnInitialized()
+    {
+        post = blazorStaticContentService.BlogPosts.FirstOrDefault(x => x.Url == PostUrl);
+    }
+}
