@@ -1,0 +1,46 @@
+* {
+    --bs-breadcrumb-font-size: 1rem !important;
+}
+
+.topbar {
+    height: 3em;
+    margin-top: 8px;
+    color: var(--text) !important;
+}
+
+
+.btn {
+    padding: 0;
+    border: none;
+    transition: none;
+    /* fill: var(--text); */
+    color: var(--text);
+}
+
+.btn:focus {
+    box-shadow: none;
+}
+
+#topbar-search {
+    max-width: 20rem;
+}
+
+.limit-height {
+    max-height: 1rem;
+}
+
+/* Desktop view */
+@media (min-width: 768px) {
+    #topbar-mobile {
+        visibility: collapse;
+        position: absolute !important;
+    }
+}
+
+/* Mobile view */
+@media (max-width: 768px) {
+    #topbar-desktop{
+        visibility: collapse;
+        position: absolute !important;
+    }
+}

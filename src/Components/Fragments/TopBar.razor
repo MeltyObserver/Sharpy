@@ -1,0 +1,113 @@
+@using System.Net
+
+@inject UserSettings settings
+@inject NavigationManager navManager
+
+@using BlazorStatic
+@* @inject BlazorStaticContentService<PostFrontMatter> blazorStaticContentService *@
+
+@*! Desktop view bar *@
+<div id="topbar-desktop" class="topbar row">
+
+    <div class="col pt-2" id="breadcrumb-path">@((MarkupString)MakeBread())</div>
+
+    @* todo: add a search page that this routes to? *@
+    <div class="col pt-1 input-group limit-height visually-hidden" id="topbar-search">
+        <span class="input-group-text" id="basic-addon1">
+            <svg class="bi" width="1em" height="1em">
+                <use href="#search-icon"></use>
+            </svg>
+        </span>
+        <input type="search" class="form-control" placeholder="Search..." aria-label="Search field"
+            aria-describedby="basic-addon1" list="posts">
+    </div>
+</div>
+
+
+@*! Mobile view bar *@
+<div id="topbar-mobile" class="topbar row text-center">
+    <button type="button" id="sidebar-btn" class="btn pt-4 d-flex align-items-center col-1 limit-height" aria-pressed="false"
+        onclick="UpdateSideBar()">
+        <svg class="bi" width="1.5em" height="1.5em">
+            <use href="#hamburger-menu"></use>
+        </svg>
+    </button>
+
+    <div id="topbar-title" class="col-10 pt-2 limit-height h5">
+        @* todo: replace this with breadcrumb? *@
+        @settings.Title
+    </div>
+
+    @* trick to be able to center the title above *@
+    <div class="col-1">
+    </div>
+</div>
+
+
+@* <datalist id="posts">
+    @foreach (var post in blazorStaticContentService.BlogPosts)
+    {
+        <option value="@post.FrontMatter.Title"><a href="@post.Url">abcd</a></option>
+    }
+</datalist> *@
+
+<script suppress-error="BL9992" src="Components/Fragments/TopBar.razor.js"></script>
+
+<svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+    <symbol id="hamburger-menu" viewBox="0 0 16 16">
+        <path fill-rule="evenodd"
+            d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
+    </symbol>
+    <symbol id="search-icon" viewBox="0 0 16 16">
+        <path
+            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+    </symbol>
+</svg>
+
+
+@code {
+    string MakeBread()
+    {
+        string bread = $"<nav aria-label='breadcrumb'><ol class='breadcrumb'>";
+        @* fake / *@
+        bread += "<li class='breadcrumb-item active' aria-current='page'></li>";
+
+        List<string> currentUrl = GetPageName();
+        for (int i = 0; i < currentUrl.Count; i++)
+        {
+            string isActive = String.Empty;
+            string url = $"<a href='{currentUrl[i]}'>{currentUrl[i]}</a>";
+
+            if (i == currentUrl.Count - 1)
+            {
+                isActive = "active";
+                url = currentUrl[i];
+            }
+            bread += $"<li class='breadcrumb-item {isActive}'>{url}</li>";
+        }
+        return bread + "</ol></nav>";
+    }
+
+    List<string> GetPageName()
+    {
+        Uri currentUrl = new Uri(navManager.Uri);
+        List<string> pages = new();
+        pages.Add(settings.Title);
+
+        if (currentUrl.Segments.Length == 1)
+        {
+            pages.Add(SiteSettings.Pages.Home);
+        }
+        else if (currentUrl.Segments.Length == 2)
+        {
+            if (currentUrl.Segments[1] == SiteSettings.Pages.About) pages.Add(SiteSettings.Pages.About);
+            if (currentUrl.Segments[1] == SiteSettings.Pages.Projects) pages.Add(SiteSettings.Pages.Projects);
+        }
+        else if (currentUrl.Segments.Length > 2)
+        {
+            pages.Add(WebUtility.UrlDecode(currentUrl.Segments[1].TrimEnd('/')));
+            pages.Add(WebUtility.UrlDecode(currentUrl.Segments.Last()));
+        }
+        return pages;
+    }
+}
