@@ -2,7 +2,7 @@
     --sidebar-width: 260px;
     --sidebar-width-inverted: -260px;
     --breakpoint-lg: 992px;
-    --breakpoint-medium: 768px;
+    --breakpoint-medium: 769px;
 }
 
 .sidebar {
@@ -38,7 +38,7 @@
 }
 
 /* desktop view */
-@media (min-width: 768px) {
+@media (min-width: 769px) {
     #main {
         /* animation: 0.8s alternate slidein; */
         transform: translateX(var(--sidebar-width));
@@ -47,7 +47,7 @@
 }
 
 /* mobile view */
-@media (max-width: 768px) {
+@media (max-width: 769px) {
     #main {
         animation: 1s alternate slideout;
     }
