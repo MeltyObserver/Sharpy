@@ -2,57 +2,79 @@
 
 @* todo: add images *@
 @* !Pinned posts *@
-<h1>Specials:</h1>
+@if (pinnedPosts.Count() > 0)
+{
+    <h1>Specials:</h1>
 
-<div class="row justify-content-center">
-    @foreach (var post in posts.Where(x => x.FrontMatter.IsPinned))
-    {
-        <div class="col-md-5 col-10 card m-2 position-relative">
-            <svg class="position-absolute top-0 start-0 translate-middle" width="1em" height="1em">
-                <use href="#stars"></use>
-            </svg>
+    <div class="row justify-content-center">
+    @foreach (var post in pinnedPosts)
+        {
+            @* todo: figure out images later *@
+            <div class="card col-md-5 col-10 m-2 position-relative" >
+                <svg class="position-absolute top-0 start-0 translate-middle" width="1em" height="1em">
+                    <use href="#stars"></use>
+                </svg>
 
-            <div class="card-body">
-                <a class="h5 card-title" href="posts/@post.Url">@post.FrontMatter.Title</a>
-                <h6 class="card-subtitle mt-2 text-body-secondary">@post.FrontMatter.Description</h6>
+                @* <div class="row g-0">
+        <div class="col-md-4">
+        <img src="http://localhost:5225/local/imgs/wallhaven-gpgzv7.jpg" class="img-fluid"
+        alt="...">
+        </div> *@
+
+                <div class="col">
+                    <div class="card-body">
+                        <a class="h5 card-title" href="posts/@post.Url">@post.FrontMatter.Title</a>
+                        <h6 class="card-subtitle mt-2 text-body-secondary">@post.FrontMatter.Description</h6>
+                    </div>
+                </div>
+                @* </div> *@
+
+                <svg class="position-absolute top-100 start-100 translate-middle" width="1.5em" height="1.5em">
+                    <use href="#stars"></use>
+                </svg>
             </div>
-
-            <svg class="position-absolute top-100 start-100 translate-middle" width="1.5em" height="1.5em">
-                <use href="#stars"></use>
-            </svg>
-        </div>
-    }
-</div>
-
-<hr />
+        }
+    </div>
+    <hr />
+}
 
 @* !Normal posts *@
 <div class="row">
-    @foreach (var post in posts.Where(x => !x.FrontMatter.IsPinned))
+    @foreach (var post in posts)
     {
-        <div class="col-12 card m-2">
-            <div class="card-body">
-                <a class="h5 card-title" href="posts/@post.Url">@post.FrontMatter.Title</a>
-                <h6 class="card-subtitle mt-2 lead">@post.FrontMatter.Description</h6>
-                <div class="d-flex flex-row mt-2">
-                    @if (@post.FrontMatter.Published.Value.Year >= 2024)
+        <div class="card col-12 m-2" style="padding-left: 0; height: 8em;">
+            <div class="row">
+
+                <div class="col-auto image-container">
+                    <img src="http://localhost:5225/local/imgs/wallhaven-gpgzv7.jpg" class="rounded-start img-fluid" style="height: 126px;">
+                </div>
+
+                <div class="card-body col-auto">
+                    <a class="h5 card-title" href="posts/@post.Url">@post.FrontMatter.Title</a>
+                    @if (!string.IsNullOrWhiteSpace(post.FrontMatter.Description))
                     {
-                        <small class="me-3 text-body-secondary">
-                            <svg class="mb-1" width="1em" height="1em">
-                                <use href="#calendar"></use>
-                            </svg>
-                            @post.FrontMatter.Published.Value.ToString("MMM dd, yyyy")
-                        </small>
+                        <h6 class="card-subtitle mt-2 lead">@post.FrontMatter.Description</h6>
                     }
-                    @if (post.FrontMatter.Tags.Count > 0)
-                    {
-                        <small class="mr-2 text-body-secondary">
-                            <svg class="pb-1" width="1.2em" height="1.2em">
-                                <use href="#tags"></use>
-                            </svg>
-                            @(string.Join(", ", post.FrontMatter.Tags))
-                        </small>
-                    }
+                    <div class="d-flex flex-row mt-2">
+                        @if (post.FrontMatter.Published.Value.Year >= 2024)
+                        {
+                            <small class="me-3 text-body-secondary">
+                                <svg class="mb-1" width="1em" height="1em">
+                                    <use href="#calendar"></use>
+                                </svg>
+                                @post.FrontMatter.Published.Value.ToString("MMM dd, yyyy")
+                            </small>
+                        }
+                        @if (post.FrontMatter.Tags.Count > 0)
+                        {
+                            <small class="mr-2 text-body-secondary">
+                                <svg class="pb-1" width="1.2em" height="1.2em">
+                                    <use href="#tags"></use>
+                                </svg>
+                                @(string.Join(", ", post.FrontMatter.Tags))
+                            </small>
+                        }
+                    </div>
                 </div>
             </div>
         </div>
@@ -78,9 +100,11 @@
 
 @code {
     IEnumerable<Post<PostFrontMatter>> posts;
+    IEnumerable<Post<PostFrontMatter>> pinnedPosts;
 
     protected override void OnInitialized()
     {
         posts = postsService.BlogPosts.OrderByDescending(x => x.FrontMatter.Title);
+        pinnedPosts = posts.Where(x => x.FrontMatter.IsPinned);
     }
 }
