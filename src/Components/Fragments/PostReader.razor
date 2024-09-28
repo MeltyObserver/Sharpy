@@ -12,6 +12,7 @@ else
     <center class=" pb-5">
         <h1 class="display-3">@post.FrontMatter.Title</h1>
         <p class="lead">@post.FrontMatter.Description</p>
+        <p class="lead">By: @post.FrontMatter.Author</p>
     </center>
     @((MarkupString)post.HtmlContent)
 
