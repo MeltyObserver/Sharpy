@@ -10,7 +10,7 @@
     @foreach (var post in pinnedPosts)
         {
             @* todo: figure out images later *@
-            <div class="card col-md-5 col-10 m-2 position-relative" >
+            <div class="card col-md-5 col-10 m-2 position-relative">
                 <svg class="position-absolute top-0 start-0 translate-middle" width="1em" height="1em">
                     <use href="#stars"></use>
                 </svg>
@@ -38,42 +38,51 @@
     <hr />
 }
 
+<form>
+    <div class="mb-3">
+        <input type="text" class="form-control" id="postSearchBar" aria-describedby="postHelp"
+            placeholder="search for a post">
+    </div>
+</form>
+
 @* !Normal posts *@
-<div class="row">
+<div class="row normal-post">
     @foreach (var post in posts)
     {
-        <div class="card col-12 m-2" style="padding-left: 0; height: 8em;">
-            <div class="row">
+        <div class="post m-2">
+            <div class="card col-12">
+                <div class="d-flex flex-row">
 
-                <div class="col-auto image-container">
-                    <img src="http://localhost:5225/local/imgs/wallhaven-gpgzv7.jpg" class="rounded-start img-fluid" style="height: 126px;">
-                </div>
+                    <div class="image-container">
+                        <img src="http://localhost:5225/local/imgs/wallhaven-gpgzv7.jpg" class="rounded img-fluid">
+                    </div>
 
-                <div class="card-body col-auto">
-                    <a class="h5 card-title" href="posts/@post.Url">@post.FrontMatter.Title</a>
-                    @if (!string.IsNullOrWhiteSpace(post.FrontMatter.Description))
-                    {
-                        <h6 class="card-subtitle mt-2 lead">@post.FrontMatter.Description</h6>
-                    }
-                    <div class="d-flex flex-row mt-2">
-                        @if (post.FrontMatter.Published.Value.Year >= 2024)
+                    <div class="card-body">
+                        <a class="h5 card-title stretched-link" href="posts/@post.Url">@post.FrontMatter.Title</a>
+                        @if (!string.IsNullOrWhiteSpace(post.FrontMatter.Description))
                         {
-                            <small class="me-3 text-body-secondary">
-                                <svg class="mb-1" width="1em" height="1em">
-                                    <use href="#calendar"></use>
-                                </svg>
-                                @post.FrontMatter.Published.Value.ToString("MMM dd, yyyy")
-                            </small>
+                            <h6 class="card-subtitle mt-2 lead">@post.FrontMatter.Description</h6>
                         }
-                        @if (post.FrontMatter.Tags.Count > 0)
-                        {
-                            <small class="mr-2 text-body-secondary">
-                                <svg class="pb-1" width="1.2em" height="1.2em">
-                                    <use href="#tags"></use>
-                                </svg>
-                                @(string.Join(", ", post.FrontMatter.Tags))
-                            </small>
-                        }
+                        <div class="d-flex flex-row mt-2">
+                            @if (post.FrontMatter.Published.Value.Year >= 2024)
+                            {
+                                <small class="me-3 text-body-secondary">
+                                    <svg class="mb-1" width="1em" height="1em">
+                                        <use href="#calendar"></use>
+                                    </svg>
+                                    @post.FrontMatter.Published.Value.ToString("MMM dd, yyyy")
+                                </small>
+                            }
+                            @if (post.FrontMatter.Tags.Count > 0)
+                            {
+                                <small class="mr-2 text-body-secondary">
+                                    <svg class="pb-1" width="1.2em" height="1.2em">
+                                        <use href="#tags"></use>
+                                    </svg>
+                                    @(string.Join(", ", post.FrontMatter.Tags))
+                                </small>
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
@@ -97,6 +106,8 @@
             d="M7.657 6.247c.11-.33.576-.33.686 0l.645 1.937a2.89 2.89 0 0 0 1.829 1.828l1.936.645c.33.11.33.576 0 .686l-1.937.645a2.89 2.89 0 0 0-1.828 1.829l-.645 1.936a.361.361 0 0 1-.686 0l-.645-1.937a2.89 2.89 0 0 0-1.828-1.828l-1.937-.645a.361.361 0 0 1 0-.686l1.937-.645a2.89 2.89 0 0 0 1.828-1.828zM3.794 1.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387A1.73 1.73 0 0 0 4.593 5.69l-.387 1.162a.217.217 0 0 1-.412 0L3.407 5.69A1.73 1.73 0 0 0 2.31 4.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387A1.73 1.73 0 0 0 3.407 2.31zM10.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.16 1.16 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.16 1.16 0 0 0-.732-.732L9.1 2.137a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732z" />
     </symbol>
 </svg>
+
+<script suppress-error="BL9992" src="Components/Fragments/PostList.razor.js"></script>
 
 @code {
     IEnumerable<Post<PostFrontMatter>> posts;

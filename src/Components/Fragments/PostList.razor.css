@@ -1,12 +1,78 @@
+a {
+    text-decoration: none;
+}
+
 .image-container {
     position: relative;
+}
+
+.normal-post .card {
     overflow: hidden;
 }
 
-.image-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Adjust image sizing */
-    mask-image: linear-gradient(to right, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 100%);
-    /* -webkit-mask-image: linear-gradient(to right, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 100%); */
+@media (min-width: 992px) {
+    .image-container img {
+        height: 126px;
+        width: 240px;
+        object-fit: cover;
+        mask-image: linear-gradient(to right, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 100%);
+        /* -webkit-mask-image: linear-gradient(to right, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 100%); */
+    }
+}
+
+/* mobile view */
+@media (max-width: 992px) {
+
+    .image-container {
+        width: 100%;
+    }
+
+    .image-container img {
+        width: 100%;
+        height: 126px;
+        display: block;
+        object-fit: cover;
+    }
+
+    /* todo: zoom in the image on hover? */
+    /* .stretched-link::after {
+        transform: scale(1.1);
+        pointer-events: ;
+    } */
+
+    .image-container::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        /* higher = darker */
+        background-color: rgba(0, 0, 0, 0.9);
+    }
+
+    /* needed to center the text */
+    .normal-post .d-flex {
+        justify-content: center;
+        align-items: center;
+        text-align: center !important;
+    }
+
+    .normal-post .card-body {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        /* todo: ask if it's better with or without glow */
+        /* text-shadow:
+        0 0 50px black,
+        0 0 10px black,
+        0 0 15px white,
+        0 0 20px white; */
+    }
+
+    .normal-post .card-body .h5,
+    .normal-post .card-body .lead,
+    .normal-post .card-body small {
+        color: #cdd6f4 !important;
+    }
 }
