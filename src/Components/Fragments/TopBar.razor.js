@@ -8,13 +8,13 @@ const MobileView = "page-mobile-view";
 const side_mobileView = "sidebar-mobile-view";
 const backdrop_animation = "sidebar-backdrop-animation";
 
-const breakpoint_medium = 768;
-// const breakpoint_lg = 992;
+// const breakpoint_medium = 768;
+const breakpoint_lg = 992;
 
 let mobileViewSet = false;
 
 window.addEventListener("resize", () => {
-    if (mobileViewSet && window.innerWidth >= breakpoint_medium) {
+    if (mobileViewSet && window.innerWidth >= breakpoint_lg) {
         HideSideBarOnMobile()
         mobileViewSet = false;
     }
