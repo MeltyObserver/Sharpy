@@ -21,7 +21,6 @@ public abstract class BaseFrontMatter : IFrontMatter
     public string? Description { get; set; }
     /// <inheritdoc />
     public DateTime? Published { get; set; }
-    public bool IsDraft { get; set; }
     public List<string> Tags { get; set; } = [];
     public AdditionalInfo? AdditionalInfo => new() { LastMod = Published };
 }
