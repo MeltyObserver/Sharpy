@@ -1,0 +1,21 @@
+@attribute [Route(SiteSettings.Pages.Posts)]
+@page "/posts/{*PostUrl}"
+@inject UserSettings settings
+
+
+
+<PageTitle>@SiteSettings.Pages.Home @@ @settings.Title</PageTitle>
+
+@if (string.IsNullOrWhiteSpace(PostUrl))
+{
+    <PostList />
+}
+else
+{
+    <PostReader PostUrl="@PostUrl"/>
+}
+
+@code {
+    [Parameter]
+    public string? PostUrl { get; set; }
+}
