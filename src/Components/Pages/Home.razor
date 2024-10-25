@@ -1,20 +1,74 @@
 ﻿@page "/"
-@page "/posts/{*PostUrl}"
+@inject UserSettings userSettings
+@inject BlazorStaticContentService<PostFrontMatter> postsService
+@inject BlazorStaticContentService<ProjectFrontMatter> projectsService
 
-@inject UserSettings settings
+<h1 class="text-center display-2 mb-4">@userSettings.WelcomeText</h1>
 
-<PageTitle>@SiteSettings.Pages.Home @@ @settings.Title</PageTitle>
+<br />
 
-@if (string.IsNullOrWhiteSpace(PostUrl))
+@*! Posts *@
+@if (pinnedPosts.Count() > 0)
 {
-    <PostList />
+  <h2 class="mb-5">Stuff I wrote:</h2>
+  <div class="row row-cols-auto justify-content-center">
+  @foreach (var post in pinnedPosts)
+    {
+      <div class="mb-4">
+        <div class="card" style="width: 18rem;">
+          <img src="@post.FrontMatter.Image" class="card-img-top">
+          <div class="card-body">
+            <h5 class="card-title">@post.FrontMatter.Title</h5>
+            <p class="card-text text-truncate">@post.FrontMatter.Description</p>
+            <a href="posts/@post.Url" class="stretched-link"></a>
+          </div>
+        </div>
+      </div>
+    }
+    <div class="mb-4 d-flex align-items-center">
+      <div class="text-center read-more-text">
+        <h3><a href="posts">Read more</a></h3>
+      </div>
+    </div>
+  </div>
+  <br />
 }
-else
+
+@if (pinnedProjects.Count() > 0)
 {
-    <PostReader PostUrl="@PostUrl"/>
+  @*! Posts *@
+  <h2 class="mb-5">Things I made:</h2>
+  <div class="row row-cols-auto justify-content-center">
+  @foreach (var project in pinnedProjects)
+    {
+      <div class="mb-4">
+        <div class="card" style="width: 18rem;">
+          <img src="@project.FrontMatter.Image" class="card-img-top">
+          <div class="card-body">
+            <h5 class="card-title">@project.FrontMatter.Title</h5>
+            <p class="card-text text-truncate">@project.FrontMatter.Description</p>
+            <a href="projects/@project.Url" class="stretched-link"></a>
+          </div>
+        </div>
+      </div>
+    }
+    <div class="mb-4 d-flex align-items-center">
+      <div class="text-center read-more-text">
+        <h3><a href="posts">See full list</a></h3>
+      </div>
+    </div>
+  </div>
 }
+
 
 @code {
-    [Parameter]
-    public string? PostUrl { get; set; }
+  IEnumerable<Post<PostFrontMatter>> pinnedPosts;
+  IEnumerable<Post<ProjectFrontMatter>> pinnedProjects;
+
+  protected override void OnInitialized()
+  {
+    pinnedPosts = postsService.BlogPosts.OrderByDescending(x => x.FrontMatter.Title).Where(x =>
+    x.FrontMatter.IsPinned).Take(3);
+    pinnedProjects = projectsService.BlogPosts.OrderByDescending(x => x.FrontMatter.Stars).Take(3);
+  }
 }
