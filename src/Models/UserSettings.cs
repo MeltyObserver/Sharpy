@@ -4,6 +4,7 @@ public class UserSettings
 {
     public required string Title { get; set; }
     public string Description { get; set; } = "Chirpy clone made in blazor";
+    public string WelcomeText { get; set; } = "Welcome to Sharpy";
     public string Image { get; set; } = "https://avatars.githubusercontent.com/u/164113402?v=4";
     public List<SocialMedia?>? SocialMedias { get; set; }
     public string DefaultTheme { get; set; } = "dark";
