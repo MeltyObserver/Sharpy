@@ -4,8 +4,19 @@
 @inject BlazorStaticContentService<ProjectFrontMatter> projectsService
 
 <h1 class="text-center display-2 mb-4">@userSettings.WelcomeText</h1>
-
 <br />
+
+
+@if (pinnedPosts.Count() == 0 && pinnedProjects.Count() == 0)
+{
+  <div class="container d-flex justify-content-center align-items-center" style="height: 60vh;">
+      <h1 class="display-4" style="opacity: 20%;">
+        Empty...
+      </h1>
+  </div>
+  return;
+}
+
 
 @*! Posts *@
 @if (pinnedPosts.Count() > 0)
