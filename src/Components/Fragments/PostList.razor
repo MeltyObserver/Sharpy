@@ -64,15 +64,12 @@
                             <h6 class="card-subtitle mt-2 lead">@post.FrontMatter.Description</h6>
                         }
                         <div class="d-flex flex-row mt-2">
-                            @if (post.FrontMatter.Published.Value.Year >= 2024)
-                            {
-                                <small class="me-3 text-body-secondary">
-                                    <svg class="mb-1" width="1em" height="1em">
-                                        <use href="#calendar"></use>
-                                    </svg>
-                                    @post.FrontMatter.Published.Value.ToString("MMM dd, yyyy")
-                                </small>
-                            }
+                            <small class="me-3 text-body-secondary">
+                                <svg class="mb-1" width="1em" height="1em">
+                                    <use href="#calendar"></use>
+                                </svg>
+                                @post.FrontMatter.Published.Value.ToString("MMM dd, yyyy")
+                            </small>
                             @if (post.FrontMatter.Tags.Count > 0)
                             {
                                 <small class="mr-2 text-body-secondary">

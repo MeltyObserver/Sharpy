@@ -1,4 +1,20 @@
-
 @attribute [Route(SiteSettings.Pages.Projects)]
+@attribute [Route(SiteSettings.Pages.Projects + "/{*PostUrl}")]
+@inject BlazorStaticContentService<ProjectFrontMatter> projectFrontMatter
 
 <h1>this is projects page</h1>
+<hr />
+
+@if (projectFrontMatter.BlogPosts is null){
+    return;
+}
+
+@foreach (var project in projectFrontMatter.BlogPosts)
+{
+    <h3>@project.FrontMatter.Title</h3><br />
+}
+
+@code {
+    [Parameter]
+    public string? PostUrl { get; set; }
+}

@@ -7,7 +7,7 @@ function SearchPosts(e) {
     let x = document.querySelectorAll(".normal-post > .post");
 
     x.forEach((node) => {
-        if (!node.querySelector(".card-title").textContent.toLowerCase().includes(userInput))
+        if (!node.querySelector(".card-title").textContent.toLowerCase().includes(userInput) && !node.querySelector(".card-subtitle").textContent.toLowerCase().includes(userInput))
         {
             // console.log(node.querySelector(".card-title").textContent);
             node.classList.add("hidden");

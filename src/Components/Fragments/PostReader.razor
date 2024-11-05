@@ -9,11 +9,19 @@
 }
 else
 {
-    <center class=" pb-5">
+    <div class="m-4 row">
+        <div class="col-md-4">
+
         <h1 class="display-3">@post.FrontMatter.Title</h1>
         <p class="lead">@post.FrontMatter.Description</p>
-        <p class="lead">By: @post.FrontMatter.Author</p>
-    </center>
+        </div>
+        <img class="cover-image col-md-8" src="@post.FrontMatter.Image" />
+        <div class="d-flex flex-row mt-2">
+            <p class="lead me-3">By: @post.FrontMatter.Contributors?[0].Name</p>
+            <p class="lead mr-2">@post.FrontMatter.Published.Value.ToString("MMM dd, yyyy")</p>
+        </div>
+        <hr style="/*width: 80%*/" />
+    </div>
     @((MarkupString)post.HtmlContent)
 
 }
